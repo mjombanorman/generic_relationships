@@ -1,0 +1,30 @@
+<!-- post_detail.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{{ post.title }}</title>
+  </head>
+  <body>
+    <h1>{{ post.title }}</h1>
+    <p>{{ post.content }}</p>
+
+    <h2>Comments:</h2>
+    {{comments}}
+    <ul>
+      {% for comment in post.comments.all %}
+      <li>{{ comment.content }}</li>
+      {% endfor %}
+    </ul>
+
+    <h2>Add Comment:</h2>
+    <form method="post" action="{% url 'post_detail' post.pk %}">
+      {% csrf_token %} {{ form.as_p }}
+      <button type="submit">Submit</button>
+    </form>
+    <a href="{% url 'post_edit' post.pk %}">Edit Post</a>
+    <a href="{% url 'post_delete' post.pk %}">Delete Post</a>
+    <a href="{% url 'post_list' %}">Back to Post List</a>
+  </body>
+</html>
